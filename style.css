@@ -91,3 +91,39 @@ body { position:relative; }
 img, video, iframe, canvas, svg { max-width:100%; }
 .hero-visual, .showcase, .floating-chip { min-width:0; }
 @media (max-width:600px) { .hero-visual { overflow:hidden; } .chip-top { right:8px; } .chip-bottom { left:8px; } }
+
+/* v9: SHQAWA PRO motion identity — subtle entrance, neon ambience and polished hover states */
+:root{--motion-ease:cubic-bezier(.2,.75,.25,1)}
+body:after{content:"";position:fixed;z-index:-1;pointer-events:none;inset:-20%;opacity:.28;background:radial-gradient(ellipse at 15% 25%,#ff365512,transparent 32%),radial-gradient(ellipse at 85% 72%,#ff765708,transparent 35%);animation:ambient-drift 18s ease-in-out infinite alternate}
+@keyframes ambient-drift{0%{transform:translate3d(-1%,0,0) scale(1)}100%{transform:translate3d(1.5%,-1%,0) scale(1.04)}}
+@keyframes neon-breathe{0%,100%{box-shadow:0 0 0 #ff365500}50%{box-shadow:0 0 24px #ff365516}}
+@keyframes soft-glint{0%{transform:translateX(140%) skewX(-18deg)}100%{transform:translateX(-220%) skewX(-18deg)}}
+@keyframes float-gentle{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes pulse-ring{0%,100%{box-shadow:0 0 0 0 #ff49651c}50%{box-shadow:0 0 0 7px #ff496500}}
+.pulse{animation:pulse-ring 2.4s ease-in-out infinite}
+.brand-art img{transition:filter .35s ease,transform .35s var(--motion-ease)}
+.brand:hover .brand-art img{filter:drop-shadow(0 0 9px #ff36556b);transform:scale(1.035)}
+.main-nav a:not(.nav-contact){position:relative}
+.main-nav a:not(.nav-contact):after{content:"";position:absolute;bottom:-7px;right:0;width:0;height:2px;border-radius:3px;background:linear-gradient(90deg,var(--red),var(--orange));transition:width .25s var(--motion-ease)}
+.main-nav a:not(.nav-contact):hover:after,.main-nav a.active:after{width:100%}
+.btn,.nav-cart,.nav-contact,.cart-open{transition:transform .25s var(--motion-ease),box-shadow .25s ease,border-color .25s ease,background-color .25s ease}
+.btn:hover,.nav-cart:hover,.nav-contact:hover{box-shadow:0 8px 26px #ff36551c;border-color:#ff536e80}
+.btn-primary:hover{box-shadow:0 10px 34px #ff36553b}
+.hero-content .eyebrow{animation:neon-breathe 4s ease-in-out infinite}
+.showcase{will-change:transform;transition:box-shadow .35s ease,border-color .35s ease}
+.hero-visual:hover .showcase{border-color:#ff536e80;box-shadow:0 35px 100px #ff183b20,inset 0 0 50px #ff334f0c}
+.floating-chip{animation:float-gentle 5s ease-in-out infinite}
+.chip-bottom{animation-delay:-2.4s}
+.category-card,.project-tile{transition:transform .3s var(--motion-ease),border-color .3s ease,box-shadow .3s ease}
+.category-card:hover,.project-tile:hover{box-shadow:0 16px 38px #0005,0 0 0 1px #ff536e15}
+.category-icon{transition:transform .3s var(--motion-ease),box-shadow .3s ease}
+.category-card:hover .category-icon{transform:translateY(-3px) rotate(-4deg);box-shadow:0 0 22px #ff36551c}
+.project-image{transition:filter .35s ease,transform .45s var(--motion-ease)}
+.project-tile:hover .project-image{filter:saturate(1.08);transform:scale(1.012)}
+.contact-box{position:relative;overflow:hidden}
+.contact-box:after{content:"";position:absolute;top:-30%;bottom:-30%;left:-55%;width:28%;pointer-events:none;background:linear-gradient(90deg,transparent,#ffffff0a,transparent);transform:skewX(-18deg)}
+.contact-box:hover:after{animation:soft-glint 1.1s ease}
+.motion-enabled .motion-reveal{opacity:0;transform:translateY(20px);transition:opacity .65s var(--motion-ease),transform .65s var(--motion-ease);transition-delay:var(--motion-delay,0ms)}
+.motion-enabled .motion-reveal.motion-visible{opacity:1;transform:translateY(0)}
+@media(max-width:700px){body:after{opacity:.18}.floating-chip{animation-duration:6s}.motion-enabled .motion-reveal{transform:translateY(13px);transition-duration:.5s}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
