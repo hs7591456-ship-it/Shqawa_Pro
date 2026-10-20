@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHQAWA PRO | الشقاوة برودكشن</title>
+    <!-- خط القاهرة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #0b0b0b;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+            padding-bottom: 110px;
+        }
+
+        /* خلفية نيون راقية في الظهر بدون المساس بالتصميم */
+        .neon-bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 20%, rgba(255, 0, 0, 0.15) 0%, rgba(11, 11, 11, 0.98) 75%),
+                        linear-gradient(135deg, #050505 0%, #120202 100%);
+        }
+
+        .neon-bg-layer::before {
+            content: '';
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: rgba(255, 0, 0, 0.08);
+            border-radius: 50%;
+            filter: blur(90px);
+            top: 10%;
+            right: 10%;
+            animation: pulseGlow 5s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.3; }
+            100% { transform: scale(1.3); opacity: 0.7; }
+        }
+
+        /* الهيدر العلوي */
+        header {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .phone-number {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .logo {
+            color: #ff0000;
+            font-size: 22px;
+            font-weight: 900;
+            text-shadow: 0 0 12px rgba(255, 0, 0, 0.7);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* البطل الرئيسية (Hero) */
+        .hero-section {
+            width: 100%;
+            max-width: 480px;
+            padding: 10px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-image-container {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .hero-title span {
+            color: #ff0000;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        .whatsapp-btn-main {
+            background-color: #ff0000;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            transition: 0.3s;
+        }
+
+        .whatsapp-btn-main:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+        }
+
+        /* كروت الأقسام */
+        .categories-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .category-card {
+            background: linear-gradient(145deg, #161616, #111111);
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .category-card:hover, .category-card.active {
+            border-color: #ff0000;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: #1f1f1f;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff0000;
+            font-size: 22px;
+            border: 1px solid #333;
+        }
+
+        .category-text h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .category-text p {
+            font-size: 13px;
+            color: #ff0000;
+            font-weight: 600;
+        }
+
+        /* شبكة عرض الأعمال والمنتجات */
+        .section-title {
+            width: 100%;
+            max-width: 480px;
+            padding: 30px 20px 15px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .works-grid {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .work-card {
+            background: #141414;
+            border: 1px solid #222;
+            border-radius: 14px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .work-card:hover {
+            border-color: #ff0000;
+            transform: translateY(-3px);
+        }
+
+        .work-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+
+        .work-card-body {
+            padding: 12px;
+        }
+
+        .work-card-body h4 {
+            font-size: 15px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .work-card-body span {
+            display: inline-block;
+            font-size: 11px;
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff0000;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .empty-works {
+            width: 100%;
+            max-width: 480px;
+            padding: 0 20px;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* زر الواتساب العريض الثابت في الأسفل */
+        .fixed-footer-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 440px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 15px;
+            border-radius: 35px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 5px 25px rgba(255, 0, 0, 0.6);
+            z-index: 99;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* نافذة الدخول للوحة التحكم المخفية */
+        #admin-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-box {
+            background: #141414;
+            border: 2px solid #ff0000;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 380px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+
+        .admin-box h2 {
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+
+        .admin-box input {
+            width: 100%;
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .admin-box button {
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الخلفية النيون في الظهر -->
+    <div class="neon-bg-layer"></div>
+
+    <!-- الهيدر العلوي -->
+    <header>
+        <div class="phone-number">01020427153</div>
+        <div class="logo" id="secretLogo" title="اضغط مرتين للوحة التحكم">SHQAWA PRO</div>
+    </header>
+
+    <!-- البطل الرئيسي -->
+    <section class="hero-section">
+        <div class="hero-image-container">
+            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="SHQAWA PRO">
+        </div>
+        <h1 class="hero-title">بحول فكرتك لـ <span>حقيقة</span></h1>
+        <p class="hero-subtitle">مواقع - متاجر - تطبيقات - تصاميم سوشيال بضغطة زر</p>
+        <a href="https://wa.me/201020427153" class="whatsapp-btn-main">
+            <i class="fab fa-whatsapp"></i> كلمني واتساب
+        </a>
+    </section>
+
+    <!-- الأقسام والكروت -->
+    <div class="categories-container">
+        <div class="category-card" onclick="filterCategory('all')">
+            <div class="category-info">
+                <div class="category-icon"><i class="fas fa-border-all"></i></div>
+                <div class="category-text">
+                    <h3>جميع الأعمال</h3>
+                    <p>عرض الكل ←</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-left"></i>
+        </div>
+
+        <div class="category-card" onclick="filterCategory('websites')">
+            <div class="category-info">
+                <div class="category-icon"><i class="fas fa-laptop-code"></i></div>
+                <div class="category-text">
+                    <h3>المواقع والمتاجر</h3>
+                    <p>اضغط وشوف شغلي ←</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-left"></i>
+        </div>
+
+        <div class="category-card" onclick="filterCategory('apps')">
+            <div class="category-info">
+                <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="category-text">
+                    <h3>التطبيقات</h3>
+                    <p>اضغط وشوف شغلي ←</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-left"></i>
+        </div>
+
+        <div class="category-card" onclick="filterCategory('bots')">
+            <div class="category-info">
+                <div class="category-icon"><i class="fas fa-robot"></i></div>
+                <div class="category-text">
+                    <h3>البوتات الذكية</h3>
+                    <p>اضغط وشوف شغلي ←</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-left"></i>
+        </div>
+
+        <div class="category-card" onclick="filterCategory('designs')">
+            <div class="category-info">
+                <div class="category-icon"><i class="fas fa-paint-brush"></i></div>
+                <div class="category-text">
+                    <h3>التصاميم والبنرات</h3>
+                    <p>اضغط وشوف شغلي ←</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-left"></i>
+        </div>
+    </div>
+
+    <!-- معرض الأعمال والمشاريع -->
+    <div class="section-title">
+        🔥 <span id="sectionHeading">أحدث الأعمال والمشاريع</span>
+    </div>
+    
+    <div id="worksContainer" class="works-grid"></div>
+    <div id="emptyWorksMsg" class="empty-works">لسه مفيش مشاريع مرفوعة في هذا القسم...</div>
+
+    <!-- زر الواتساب العريض الثابت -->
+    <a href="https://wa.me/201020427153" class="fixed-footer-whatsapp">
+        <i class="fab fa-whatsapp"></i> واتساب: 01020427153
+    </a>
+
+    <!-- نافذة السرية للوحة التحكم -->
+    <div id="admin-modal">
+        <div class="admin-box">
+            <h2>لوحة التحكم السرية</h2>
+            <input type="password" id="adminPass" placeholder="أدخل كلمة المرور">
+            <button onclick="checkAdmin()">دخول</button>
+        </div>
+    </div>
+
+    <script>
+        // إخفاء وفتح لوحة التحكم السرية
+        const logo = document.getElementById('secretLogo');
+        const modal = document.getElementById('admin-modal');
+
+        logo.addEventListener('dblclick', () => {
+            modal.style.display = 'flex';
+        });
+
+        function checkAdmin() {
+            const pass = document.getElementById('adminPass').value;
+            if(pass === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
+                alert('كلمة المرور غير صحيحة!');
+            }
+        }
+
+        // تحضير وقراءة المشاريع المعروضة
+        function loadProjects() {
+            const projects = JSON.parse(localStorage.getItem('shqawa_projects') || '[]');
+            renderProjects(projects, 'all');
+        }
+
+        function renderProjects(projects, category) {
+            const container = document.getElementById('worksContainer');
+            const emptyMsg = document.getElementById('emptyWorksMsg');
+            container.innerHTML = '';
+
+            const filtered = category === 'all' 
+                ? projects 
+                : projects.filter(p => p.category === category);
+
+            if(filtered.length === 0) {
+                emptyMsg.style.display = 'block';
+            } else {
+                emptyMsg.style.display = 'none';
+                filtered.forEach(p => {
+                    const card = document.createElement('div');
+                    card.className = 'work-card';
+                    card.innerHTML = `
+                        <img src="${p.image}" alt="${p.title}">
+                        <div class="work-card-body">
+                            <h4>${p.title}</h4>
+                            <span>${p.categoryName}</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+        }
+
+        function filterCategory(cat) {
+            const projects = JSON.parse(localStorage.getItem('shqawa_projects') || '[]');
+            renderProjects(projects, cat);
+        }
+
+        window.onload = loadProjects;
+    </script>
+</body>
+</html>
