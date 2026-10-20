@@ -362,8 +362,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!currentItems.length) {
       root.innerHTML =
         '<div class="empty-state">' +
-        '<span>✦</span><b>لسه مفيش مشاريع</b>' +
-        '<p>أضف أول مشروع من النموذج بالأعلى.</p></div>';
+        '<span>S</span><b>لسه مفيش مشاريع</b>' +
+       '<p>أضف أول مشروع من النموذج بالأعلى.</p></div>';
       return;
     }
 
