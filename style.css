@@ -92,47 +92,6 @@ img, video, iframe, canvas, svg { max-width:100%; }
 .hero-visual, .showcase, .floating-chip { min-width:0; }
 @media (max-width:600px) { .hero-visual { overflow:hidden; } .chip-top { right:8px; } .chip-bottom { left:8px; } }
 
-/* v9 — vivid animated red laser atmosphere, neon buttons and separate creator page */
-body{isolation:isolate;background:#07070b}
-body:before{content:"";position:fixed;inset:-35%;z-index:-2;pointer-events:none;background:radial-gradient(ellipse at 18% 24%,#ff163b30 0,transparent 28%),radial-gradient(ellipse at 80% 62%,#a40b2930 0,transparent 31%),radial-gradient(ellipse at 55% 4%,#ff60451a 0,transparent 28%);filter:blur(22px);animation:redNebula 13s ease-in-out infinite alternate}
-body:after{content:"";position:fixed;z-index:-1;pointer-events:none;top:-55%;left:-65%;width:65vw;height:210vh;min-width:280px;transform:rotate(27deg);background:linear-gradient(90deg,transparent 0%,#ff163b00 35%,#ff163b08 44%,#ff304b38 49%,#ffb0bd20 50%,#ff163b12 52%,transparent 68%);filter:blur(13px);animation:redLaser 9s linear infinite}
-.site-header,main,.site-footer{position:relative;z-index:1}
-@keyframes redNebula{0%{transform:translate3d(-3%,0,0) scale(1);opacity:.65}50%{transform:translate3d(4%,2%,0) scale(1.08);opacity:1}100%{transform:translate3d(1%,-3%,0) scale(1.03);opacity:.78}}
-@keyframes redLaser{0%{left:-85%;opacity:0}12%{opacity:.8}55%{opacity:.65}100%{left:130%;opacity:0}}
-.brand-name{display:block;white-space:nowrap;text-shadow:0 0 18px #ff36552b}
-.brand-name b{color:#ff3655;text-shadow:0 0 12px #ff3655a8}
-.brand-art{position:relative;overflow:visible}
-.brand-art:after{content:"";position:absolute;inset:2px;border:1px solid #ff3655a0;border-radius:12px;box-shadow:0 0 9px #ff3655a0,inset 0 0 10px #ff365528;pointer-events:none;animation:logoFrame 3s ease-in-out infinite}
-@keyframes logoFrame{0%,100%{opacity:.45;box-shadow:0 0 5px #ff36555c,inset 0 0 5px #ff36551a}50%{opacity:1;box-shadow:0 0 17px #ff3655c9,inset 0 0 13px #ff36554d}}
-.btn{position:relative;overflow:hidden;isolation:isolate;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
-.btn:before{content:"";position:absolute;z-index:-1;top:-40%;bottom:-40%;left:-70%;width:42%;transform:skewX(-22deg);background:linear-gradient(90deg,transparent,#ffffff70,transparent);animation:buttonSweep 4s ease-in-out infinite}
-.btn-primary{border-color:#ff7184;background:linear-gradient(115deg,#ff1744,#ff4b52 52%,#d91539);box-shadow:0 0 0 1px #ff365525,0 8px 25px #ff163b35,0 0 23px #ff163b20}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 0 1px #ff7184a6,0 12px 32px #ff163b60,0 0 25px #ff163b45}
-.btn-ghost:hover,.nav-contact:hover,.nav-cart:hover{border-color:#ff536e;background:#ff365512;box-shadow:0 0 18px #ff365525}
-@keyframes buttonSweep{0%,58%{left:-70%;opacity:0}68%{opacity:1}90%,100%{left:140%;opacity:0}}
-.category-card,.project-tile,.contact-box,.showcase{transition:border-color .25s,box-shadow .25s,transform .25s}
-.category-card:hover,.project-tile:hover{border-color:#ff536e80;box-shadow:0 10px 35px #ff163b18,0 0 17px #ff163b0c}
-.category-icon{box-shadow:0 0 15px #ff36551c;animation:iconGlow 4s ease-in-out infinite}
-@keyframes iconGlow{0%,100%{box-shadow:0 0 6px #ff36551a}50%{box-shadow:0 0 19px #ff36554a}}
-.main-nav a[href="/about.html"]{color:#ff9aaa}
-.about-main{min-height:calc(100vh - 170px);display:grid;place-items:center;padding:55px 20px 80px}
-.about-card{position:relative;isolation:isolate;overflow:hidden;width:min(650px,100%);padding:clamp(25px,6vw,55px);text-align:center;border:1px solid #ff36555c;border-radius:25px;background:linear-gradient(145deg,#1b0d15ed,#0d0d12f5 58%,#1a0b13ed);box-shadow:0 25px 90px #ff163b18,inset 0 0 45px #ff36550b}
-.about-card:before{content:"";position:absolute;z-index:-1;inset:-80%;background:conic-gradient(from 0deg,transparent 0 65%,#ff365520 73%,#ff879b88 75%,#ff365514 78%,transparent 85%);animation:aboutOrbit 8s linear infinite}
-.about-card:after{content:"";position:absolute;z-index:-1;inset:1px;border-radius:24px;background:linear-gradient(145deg,#1b0d15,#0d0d12 58%,#1a0b13)}
-@keyframes aboutOrbit{to{transform:rotate(360deg)}}
-.about-avatar{width:130px;height:130px;margin:23px auto 18px;padding:5px;border:1px solid #ff536e;border-radius:24px;box-shadow:0 0 20px #ff36555a,0 0 55px #ff163b1c;animation:avatarFloat 4s ease-in-out infinite;overflow:hidden}
-.about-avatar img{width:100%;height:100%;object-fit:contain;border-radius:18px}
-@keyframes avatarFloat{0%,100%{transform:translateY(0);box-shadow:0 0 15px #ff36553a}50%{transform:translateY(-6px);box-shadow:0 0 27px #ff36557a}}
-.about-kicker{display:inline-flex;align-items:center;gap:9px;color:#ff9aaa;font-size:11px}
-.about-card h1{font-size:clamp(36px,7vw,58px);margin:10px 0 12px;font-weight:900}
-.about-lead{max-width:480px;margin:0 auto;color:#bcb4c1;font-size:13px;line-height:2.2}
-.about-lead strong{color:#fff}
-.about-details{display:grid;gap:10px;margin:28px 0;text-align:right}
-.about-details div{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 15px;border:1px solid #ffffff12;border-radius:11px;background:#ffffff04}
-.about-details span{color:#ff8b9b;font-size:11px;white-space:nowrap}
-.about-details b{font-size:11px;color:#eee8f0;font-weight:700}
-.about-contact{margin-top:3px}
-.about-back{display:block;margin-top:22px;color:#a9a1af;font-size:11px;transition:color .2s}
-.about-back:hover{color:#ff8b9b}
-@media(max-width:600px){.brand{gap:5px}.brand-art{width:65px}.brand-name{font-size:12px}.brand-name small{font-size:8px}.about-main{padding:35px 14px 55px}.about-card{border-radius:20px;padding:28px 18px}.about-details div{align-items:flex-start;flex-direction:column;gap:4px}.about-avatar{width:112px;height:112px}}
-@media(prefers-reduced-motion:reduce){body:before,body:after,.brand-art:after,.btn:before,.category-icon,.about-card:before,.about-avatar{animation:none!important}html{scroll-behavior:auto}.btn,.category-card,.project-tile{transition:none}}
+/* Custom background media layer (configured in background-config.js) */
+#custom-site-background{isolation:isolate;transition:opacity .25s ease;}
+#custom-site-background img,#custom-site-background video{filter:saturate(1.08) contrast(1.02);}
