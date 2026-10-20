@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHQAWA PRO | الشقاوة برودكشن</title>
-    <!-- خط القاهرة -->
+    <!-- خط القاهرة العصري -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,291 +17,277 @@
         }
 
         body {
-            background-color: #0b0b0b;
-            color: #fff;
+            background-color: #08080c;
+            color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding-bottom: 110px;
             position: relative;
             overflow-x: hidden;
-            padding-bottom: 110px;
         }
 
-        /* خلفية نيون راقية في الظهر بدون المساس بالتصميم */
-        .neon-bg-layer {
+        /* الكانفاس الخاص بالخلفية المتحركة */
+        #bgCanvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 50% 20%, rgba(255, 0, 0, 0.15) 0%, rgba(11, 11, 11, 0.98) 75%),
-                        linear-gradient(135deg, #050505 0%, #120202 100%);
+            pointer-events: none;
         }
 
-        .neon-bg-layer::before {
-            content: '';
-            position: absolute;
-            width: 320px;
-            height: 320px;
-            background: rgba(255, 0, 0, 0.08);
+        /* قائمة تبديل نمط الخلفية */
+        .bg-switcher-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(20, 20, 25, 0.85);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            color: #fff;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            filter: blur(90px);
-            top: 10%;
-            right: 10%;
-            animation: pulseGlow 5s infinite alternate;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            transition: 0.3s;
         }
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.3; }
-            100% { transform: scale(1.3); opacity: 0.7; }
+        .bg-switcher-btn:hover {
+            transform: scale(1.1) rotate(18deg);
+            border-color: #ff0000;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
         }
 
-        /* الهيدر العلوي */
+        .bg-menu {
+            position: fixed;
+            top: 75px;
+            left: 20px;
+            background: rgba(15, 15, 20, 0.95);
+            border: 1px solid rgba(255, 0, 0, 0.4);
+            border-radius: 14px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            width: 180px;
+        }
+
+        .bg-menu button {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            color: #ccc;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: right;
+            transition: 0.2s;
+        }
+
+        .bg-menu button:hover, .bg-menu button.active {
+            background: rgba(255, 0, 0, 0.2);
+            border-color: #ff0000;
+            color: #fff;
+        }
+
+        /* الهيدر */
         header {
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 20px 25px;
         }
 
-        .phone-number {
-            color: #fff;
-            font-size: 16px;
+        .phone-num {
+            font-size: 15px;
             font-weight: 700;
-            letter-spacing: 1px;
+            color: #ddd;
+            letter-spacing: 0.5px;
         }
 
-        .logo {
-            color: #ff0000;
-            font-size: 22px;
+        .brand-logo {
+            font-size: 24px;
             font-weight: 900;
-            text-shadow: 0 0 12px rgba(255, 0, 0, 0.7);
+            color: #ff0000;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
             cursor: pointer;
             user-select: none;
         }
 
-        /* البطل الرئيسية (Hero) */
-        .hero-section {
+        /* قسم البطل */
+        .hero {
             width: 100%;
-            max-width: 480px;
-            padding: 10px 20px;
+            max-width: 500px;
+            padding: 0 20px;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        .hero-image-container {
-            width: 100%;
-            height: 220px;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 2px solid rgba(255, 0, 0, 0.3);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-        }
-
-        .hero-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .hero-card {
+            background: rgba(18, 18, 24, 0.7);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 25px 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            margin-bottom: 25px;
         }
 
         .hero-title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 900;
             color: #fff;
-            line-height: 1.4;
-            margin-bottom: 10px;
+            line-height: 1.3;
+            margin-bottom: 8px;
         }
 
         .hero-title span {
             color: #ff0000;
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+            text-shadow: 0 0 18px rgba(255, 0, 0, 0.9);
         }
 
-        .hero-subtitle {
-            font-size: 14px;
+        .hero-sub {
+            font-size: 13px;
             color: #aaa;
             margin-bottom: 20px;
-        }
-
-        .whatsapp-btn-main {
-            background-color: #ff0000;
-            color: #fff;
-            width: 100%;
-            padding: 14px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            transition: 0.3s;
-        }
-
-        .whatsapp-btn-main:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
-        }
-
-        /* كروت الأقسام */
-        .categories-container {
-            width: 100%;
-            max-width: 480px;
-            padding: 0 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .category-card {
-            background: linear-gradient(145deg, #161616, #111111);
-            border: 1px solid #222;
-            border-radius: 16px;
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .category-card:hover, .category-card.active {
-            border-color: #ff0000;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .category-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .category-icon {
-            width: 50px;
-            height: 50px;
-            background: #1f1f1f;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #ff0000;
-            font-size: 22px;
-            border: 1px solid #333;
-        }
-
-        .category-text h3 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .category-text p {
-            font-size: 13px;
-            color: #ff0000;
             font-weight: 600;
         }
 
-        /* شبكة عرض الأعمال والمنتجات */
-        .section-title {
-            width: 100%;
-            max-width: 480px;
-            padding: 30px 20px 15px;
-            font-size: 20px;
-            font-weight: 800;
+        .main-call-btn {
+            background: linear-gradient(135deg, #ff0000, #b30000);
             color: #fff;
-            display: flex;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-        }
-
-        .works-grid {
-            width: 100%;
-            max-width: 480px;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .work-card {
-            background: #141414;
-            border: 1px solid #222;
-            border-radius: 14px;
-            overflow: hidden;
+            gap: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
             transition: 0.3s;
         }
 
-        .work-card:hover {
-            border-color: #ff0000;
-            transform: translateY(-3px);
+        .main-call-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
         }
 
-        .work-card img {
+        /* كروت الأقسام العصرية */
+        .categories-grid {
             width: 100%;
-            height: 140px;
-            object-fit: cover;
+            max-width: 500px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
-        .work-card-body {
-            padding: 12px;
+        .cat-card {
+            background: rgba(20, 20, 28, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
         }
 
-        .work-card-body h4 {
-            font-size: 15px;
-            color: #fff;
-            margin-bottom: 5px;
+        .cat-card:hover {
+            border-color: rgba(255, 0, 0, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.2);
+            background: rgba(25, 25, 35, 0.85);
         }
 
-        .work-card-body span {
-            display: inline-block;
-            font-size: 11px;
-            background: rgba(255, 0, 0, 0.2);
+        .cat-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cat-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 0, 0, 0.12);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: #ff0000;
-            padding: 3px 8px;
-            border-radius: 6px;
+            font-size: 20px;
+        }
+
+        .cat-text h3 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .cat-text p {
+            font-size: 12px;
+            color: #ff0000;
             font-weight: 700;
         }
 
-        .empty-works {
+        .cat-arrow {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* عنوان المعرض */
+        .section-header {
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
+            padding: 25px 20px 10px;
+            font-size: 19px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .empty-works-box {
+            width: 100%;
+            max-width: 500px;
             padding: 0 20px;
             color: #777;
             font-size: 14px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
-        /* زر الواتساب العريض الثابت في الأسفل */
-        .fixed-footer-whatsapp {
+        /* زر الواتساب العريض السفلي */
+        .fixed-whatsapp {
             position: fixed;
             bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
             width: 90%;
-            max-width: 440px;
-            background-color: #ff0000;
+            max-width: 460px;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
             color: #fff;
             padding: 15px;
             border-radius: 35px;
             text-align: center;
-            font-size: 18px;
-            font-weight: 800;
+            font-size: 17px;
+            font-weight: 900;
             text-decoration: none;
-            box-shadow: 0 5px 25px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 5px 25px rgba(255, 0, 0, 0.7);
             z-index: 99;
             display: flex;
             justify-content: center;
@@ -309,174 +295,176 @@
             gap: 10px;
         }
 
-        /* نافذة الدخول للوحة التحكم المخفية */
-        #admin-modal {
+        /* نافذة لوحة التحكم */
+        #adminModal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
 
-        .admin-box {
-            background: #141414;
+        .modal-body {
+            background: #121218;
             border: 2px solid #ff0000;
             padding: 30px;
-            border-radius: 16px;
+            border-radius: 20px;
             width: 90%;
-            max-width: 380px;
+            max-width: 360px;
             text-align: center;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
         }
 
-        .admin-box h2 {
-            color: #ff0000;
-            margin-bottom: 15px;
+        .modal-body h2 { color: #ff0000; margin-bottom: 15px; }
+
+        .modal-body input {
+            width: 100%; padding: 12px; background: #08080c;
+            border: 1px solid #333; color: #fff; border-radius: 10px;
+            margin-bottom: 15px; text-align: center; font-size: 16px;
         }
 
-        .admin-box input {
-            width: 100%;
-            padding: 12px;
-            background: #0a0a0a;
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        .admin-box button {
-            background: #ff0000;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
+        .modal-body button {
+            background: #ff0000; color: #fff; border: none;
+            padding: 12px; width: 100%; border-radius: 10px;
+            font-weight: 800; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- الخلفية النيون في الظهر -->
-    <div class="neon-bg-layer"></div>
+    <!-- الكانفاس الخاص بالخلفيات المتحركة -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- زر تبديل نمط الخلفية -->
+    <button class="bg-switcher-btn" id="bgSwitcherBtn" title="تغيير نمط الخلفية المتحركة">
+        <i class="fas fa-palette"></i>
+    </button>
+
+    <!-- قائمة أنماط الخلفيات -->
+    <div class="bg-menu" id="bgMenu">
+        <button onclick="setBgPattern('particles')" id="btn-particles" class="active">🔴 جزيئات النيون</button>
+        <button onclick="setBgPattern('cyberwave')" id="btn-cyberwave">🌐 شبكة السايبير</button>
+        <button onclick="setBgPattern('cosmic')" id="btn-cosmic">💫 التوهج الكوني</button>
+    </div>
 
     <!-- الهيدر العلوي -->
     <header>
-        <div class="phone-number">01020427153</div>
-        <div class="logo" id="secretLogo" title="اضغط مرتين للوحة التحكم">SHQAWA PRO</div>
+        <div class="phone-num">01020427153</div>
+        <div class="brand-logo" id="brandLogo" title="اضغط مرتين للوحة التحكم">SHQAWA PRO</div>
     </header>
 
     <!-- البطل الرئيسي -->
-    <section class="hero-section">
-        <div class="hero-image-container">
-            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80" alt="SHQAWA PRO">
+    <section class="hero">
+        <div class="hero-card">
+            <h1 class="hero-title">بحول فكرتك لـ <span>حقيقة</span></h1>
+            <p class="hero-sub">مواقع - متاجر - تطبيقات - تصاميم سوشيال بضغطة زر</p>
+            <a href="https://wa.me/201020427153" class="main-call-btn">
+                <i class="fab fa-whatsapp"></i> كلمني واتساب
+            </a>
         </div>
-        <h1 class="hero-title">بحول فكرتك لـ <span>حقيقة</span></h1>
-        <p class="hero-subtitle">مواقع - متاجر - تطبيقات - تصاميم سوشيال بضغطة زر</p>
-        <a href="https://wa.me/201020427153" class="whatsapp-btn-main">
-            <i class="fab fa-whatsapp"></i> كلمني واتساب
-        </a>
     </section>
 
-    <!-- الأقسام والكروت -->
-    <div class="categories-container">
-        <div class="category-card" onclick="filterCategory('all')">
-            <div class="category-info">
-                <div class="category-icon"><i class="fas fa-border-all"></i></div>
-                <div class="category-text">
+    <!-- كروت الأقسام -->
+    <div class="categories-grid">
+        <div class="cat-card">
+            <div class="cat-info">
+                <div class="cat-icon"><i class="fas fa-border-all"></i></div>
+                <div class="cat-text">
                     <h3>جميع الأعمال</h3>
-                    <p>عرض الكل ←</p>
+                    <p>استعراض الكل ←</p>
                 </div>
             </div>
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="category-card" onclick="filterCategory('websites')">
-            <div class="category-info">
-                <div class="category-icon"><i class="fas fa-laptop-code"></i></div>
-                <div class="category-text">
+        <div class="cat-card">
+            <div class="cat-info">
+                <div class="cat-icon"><i class="fas fa-laptop-code"></i></div>
+                <div class="cat-text">
                     <h3>المواقع والمتاجر</h3>
                     <p>اضغط وشوف شغلي ←</p>
                 </div>
             </div>
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="category-card" onclick="filterCategory('apps')">
-            <div class="category-info">
-                <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
-                <div class="category-text">
+        <div class="cat-card">
+            <div class="cat-info">
+                <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
+                <div class="cat-text">
                     <h3>التطبيقات</h3>
                     <p>اضغط وشوف شغلي ←</p>
                 </div>
             </div>
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="category-card" onclick="filterCategory('bots')">
-            <div class="category-info">
-                <div class="category-icon"><i class="fas fa-robot"></i></div>
-                <div class="category-text">
+        <div class="cat-card">
+            <div class="cat-info">
+                <div class="cat-icon"><i class="fas fa-robot"></i></div>
+                <div class="cat-text">
                     <h3>البوتات الذكية</h3>
                     <p>اضغط وشوف شغلي ←</p>
                 </div>
             </div>
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="category-card" onclick="filterCategory('designs')">
-            <div class="category-info">
-                <div class="category-icon"><i class="fas fa-paint-brush"></i></div>
-                <div class="category-text">
+        <div class="cat-card">
+            <div class="cat-info">
+                <div class="cat-icon"><i class="fas fa-code"></i></div>
+                <div class="cat-text">
+                    <h3>البرمجة والسكربتات</h3>
+                    <p>اضغط وشوف شغلي ←</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-left cat-arrow"></i>
+        </div>
+
+        <div class="cat-card">
+            <div class="cat-info">
+                <div class="cat-icon"><i class="fas fa-paint-brush"></i></div>
+                <div class="cat-text">
                     <h3>التصاميم والبنرات</h3>
                     <p>اضغط وشوف شغلي ←</p>
                 </div>
             </div>
-            <i class="fas fa-chevron-left"></i>
+            <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
     </div>
 
-    <!-- معرض الأعمال والمشاريع -->
-    <div class="section-title">
-        🔥 <span id="sectionHeading">أحدث الأعمال والمشاريع</span>
-    </div>
-    
-    <div id="worksContainer" class="works-grid"></div>
-    <div id="emptyWorksMsg" class="empty-works">لسه مفيش مشاريع مرفوعة في هذا القسم...</div>
+    <!-- آخر الأعمال -->
+    <div class="section-header">🔥 أحدث المشاريع والأعمال</div>
+    <div class="empty-works-box">لسه مفيش مشاريع مرفوعة، ارفع من لوحة التحكم...</div>
 
-    <!-- زر الواتساب العريض الثابت -->
-    <a href="https://wa.me/201020427153" class="fixed-footer-whatsapp">
+    <!-- زر الواتساب الأسفل -->
+    <a href="https://wa.me/201020427153" class="fixed-whatsapp">
         <i class="fab fa-whatsapp"></i> واتساب: 01020427153
     </a>
 
-    <!-- نافذة السرية للوحة التحكم -->
-    <div id="admin-modal">
-        <div class="admin-box">
-            <h2>لوحة التحكم السرية</h2>
-            <input type="password" id="adminPass" placeholder="أدخل كلمة المرور">
-            <button onclick="checkAdmin()">دخول</button>
+    <!-- نافذة لوحة التحكم السرية -->
+    <div id="adminModal">
+        <div class="modal-body">
+            <h2>لوحة التحكم</h2>
+            <input type="password" id="passInput" placeholder="كلمة المرور">
+            <button onclick="loginAdmin()">دخول</button>
         </div>
     </div>
 
+    <!-- كود المحرك والخلفيات المتحركة -->
     <script>
-        // إخفاء وفتح لوحة التحكم السرية
-        const logo = document.getElementById('secretLogo');
-        const modal = document.getElementById('admin-modal');
+        // --- قائمة التبديل لوحة التحكم ---
+        const logo = document.getElementById('brandLogo');
+        const modal = document.getElementById('adminModal');
 
         logo.addEventListener('dblclick', () => {
             modal.style.display = 'flex';
         });
 
-        function checkAdmin() {
-            const pass = document.getElementById('adminPass').value;
+        function loginAdmin() {
+            const pass = document.getElementById('passInput').value;
             if(pass === 'admin') {
                 window.location.href = 'admin.html';
             } else {
@@ -484,46 +472,104 @@
             }
         }
 
-        // تحضير وقراءة المشاريع المعروضة
-        function loadProjects() {
-            const projects = JSON.parse(localStorage.getItem('shqawa_projects') || '[]');
-            renderProjects(projects, 'all');
+        // --- محرك الخلفيات المتحركة التفاعلي ---
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        const switcherBtn = document.getElementById('bgSwitcherBtn');
+        const bgMenu = document.getElementById('bgMenu');
+
+        switcherBtn.onclick = () => {
+            bgMenu.style.display = bgMenu.style.display === 'flex' ? 'none' : 'flex';
+        };
+
+        let width, height;
+        let pattern = localStorage.getItem('shqawa_bg_pattern') || 'particles';
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // 1. نمط الجزيئات
+        let particles = [];
+        for(let i=0; i<60; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2 + 1,
+                vx: (Math.random() - 0.5) * 0.8,
+                vy: (Math.random() - 0.5) * 0.8,
+                alpha: Math.random()
+            });
         }
 
-        function renderProjects(projects, category) {
-            const container = document.getElementById('worksContainer');
-            const emptyMsg = document.getElementById('emptyWorksMsg');
-            container.innerHTML = '';
+        let step = 0;
 
-            const filtered = category === 'all' 
-                ? projects 
-                : projects.filter(p => p.category === category);
+        function drawBackground() {
+            ctx.clearRect(0, 0, width, height);
 
-            if(filtered.length === 0) {
-                emptyMsg.style.display = 'block';
-            } else {
-                emptyMsg.style.display = 'none';
-                filtered.forEach(p => {
-                    const card = document.createElement('div');
-                    card.className = 'work-card';
-                    card.innerHTML = `
-                        <img src="${p.image}" alt="${p.title}">
-                        <div class="work-card-body">
-                            <h4>${p.title}</h4>
-                            <span>${p.categoryName}</span>
-                        </div>
-                    `;
-                    container.appendChild(card);
+            if(pattern === 'particles') {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if(p.x < 0 || p.x > width) p.vx *= -1;
+                    if(p.y < 0 || p.y > height) p.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 0, 0, ${p.alpha * 0.7})`;
+                    ctx.fill();
                 });
+            } 
+            else if(pattern === 'cyberwave') {
+                step += 0.02;
+                ctx.strokeStyle = 'rgba(255, 0, 0, 0.15)';
+                ctx.lineWidth = 1;
+
+                for(let y = 0; y < height; y += 40) {
+                    ctx.beginPath();
+                    for(let x = 0; x < width; x += 20) {
+                        let wave = Math.sin(x * 0.01 + step + y * 0.01) * 15;
+                        if(x === 0) ctx.moveTo(x, y + wave);
+                        else ctx.lineTo(x, y + wave);
+                    }
+                    ctx.stroke();
+                }
+            } 
+            else if(pattern === 'cosmic') {
+                step += 0.01;
+                let gradient = ctx.createRadialGradient(
+                    width/2 + Math.sin(step)*100, 
+                    height/3 + Math.cos(step)*50, 
+                    20, 
+                    width/2, 
+                    height/2, 
+                    width * 0.7
+                );
+                gradient.addColorStop(0, 'rgba(255, 0, 0, 0.22)');
+                gradient.addColorStop(1, 'rgba(8, 8, 12, 0)');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, width, height);
             }
+
+            requestAnimationFrame(drawBackground);
         }
 
-        function filterCategory(cat) {
-            const projects = JSON.parse(localStorage.getItem('shqawa_projects') || '[]');
-            renderProjects(projects, cat);
+        function setBgPattern(p) {
+            pattern = p;
+            localStorage.setItem('shqawa_bg_pattern', p);
+            document.querySelectorAll('.bg-menu button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + p).classList.add('active');
+            bgMenu.style.display = 'none';
         }
 
-        window.onload = loadProjects;
+        // ضبط الزر النشط بداية
+        document.getElementById('btn-' + pattern)?.classList.add('active');
+
+        drawBackground();
     </script>
 </body>
 </html>
