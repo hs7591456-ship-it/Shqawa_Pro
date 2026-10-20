@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHQAWA PRO</title>
-    <!-- خط القاهرة -->
+    <title>SHQAWA PRO | الشقاوة برودكشن</title>
+    <!-- خط القاهرة العصري -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- أيقونات FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,7 +18,7 @@
         }
 
         body {
-            background-color: #07070a;
+            background-color: #050508;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -29,35 +29,34 @@
             overflow-x: hidden;
         }
 
-        /* خلفية نيون عالية السرعة والخفة GPU Accelerated */
-        .fast-neon-bg {
+        /* خلفية نيون خفيفة جداً وسريعة للغاية */
+        .ultra-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 50% 15%, rgba(255, 0, 0, 0.18) 0%, rgba(7, 7, 10, 0.98) 70%),
-                linear-gradient(180deg, #07070a 0%, #110202 100%);
+            background: radial-gradient(circle at 50% 10%, rgba(255, 0, 0, 0.15) 0%, rgba(5, 5, 8, 0.98) 70%);
             pointer-events: none;
         }
 
-        .bg-glow-orb {
+        .glow-circle {
             position: absolute;
-            width: 250px;
-            height: 250px;
-            background: rgba(255, 0, 0, 0.12);
-            filter: blur(80px);
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 0, 0, 0.1);
+            filter: blur(90px);
             border-radius: 50%;
-            top: 10%;
-            right: 5%;
-            animation: pulseFast 4s infinite alternate ease-in-out;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: pulseGlow 5s infinite alternate ease-in-out;
         }
 
-        @keyframes pulseFast {
-            0% { transform: scale(1); opacity: 0.4; }
-            100% { transform: scale(1.2); opacity: 0.8; }
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; transform: translateX(-50%) scale(0.9); }
+            100% { opacity: 0.7; transform: translateX(-50%) scale(1.15); }
         }
 
         /* الهيدر العلوي */
@@ -71,14 +70,13 @@
         }
 
         .phone-num {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 5px 12px;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         .brand-logo {
@@ -88,9 +86,14 @@
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
             cursor: pointer;
             user-select: none;
+            transition: 0.2s;
         }
 
-        /* قسم البطل الرئيسي */
+        .brand-logo:active {
+            transform: scale(0.95);
+        }
+
+        /* البطل الرئيسي والبانر */
         .hero {
             width: 100%;
             max-width: 480px;
@@ -100,13 +103,13 @@
 
         .hero-banner {
             width: 100%;
-            height: 210px;
-            border-radius: 20px;
+            height: 220px;
+            border-radius: 22px;
             overflow: hidden;
             position: relative;
             margin-bottom: 20px;
-            border: 1px solid rgba(255, 0, 0, 0.4);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.25);
+            border: 1px solid rgba(255, 0, 0, 0.35);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
         }
 
         .hero-banner img {
@@ -130,42 +133,41 @@
             font-size: 24px;
             font-weight: 900;
             color: #fff;
-            margin-bottom: 2px;
         }
 
         .hero-title-red {
             color: #ff0000;
-            font-size: 32px;
+            font-size: 34px;
             font-weight: 900;
-            text-shadow: 0 0 18px rgba(255, 0, 0, 0.9);
-            margin-bottom: 6px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.9);
+            margin-bottom: 4px;
         }
 
         .hero-sub {
             font-size: 12px;
             color: #ccc;
-            margin-bottom: 14px;
+            margin-bottom: 15px;
             font-weight: 600;
         }
 
         .btn-call {
-            background: linear-gradient(135deg, #ff0000, #cc0000);
+            background: linear-gradient(135deg, #ff0000, #b30000);
             color: #fff;
             padding: 10px 28px;
             border-radius: 25px;
             font-weight: 800;
             font-size: 15px;
             text-decoration: none;
-            box-shadow: 0 0 18px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
             display: inline-block;
-            transition: transform 0.2s;
+            transition: 0.2s;
         }
 
         .btn-call:active {
             transform: scale(0.95);
         }
 
-        /* كروت الأقسام المودرن السريعة */
+        /* كروت الأقسام السريعة والخرافية */
         .categories-grid {
             width: 100%;
             max-width: 480px;
@@ -176,46 +178,46 @@
         }
 
         .cat-card {
-            background: rgba(18, 18, 25, 0.8);
+            background: rgba(18, 18, 26, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 15px 18px;
+            border-radius: 18px;
+            padding: 16px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             transition: all 0.2s ease;
         }
 
         .cat-card:active, .cat-card.active {
             border-color: #ff0000;
+            background: rgba(255, 0, 0, 0.15);
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.3);
             transform: scale(0.98);
-            background: rgba(255, 0, 0, 0.12);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
 
         .cat-info {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 15px;
         }
 
         .cat-icon {
-            width: 46px;
-            height: 46px;
+            width: 48px;
+            height: 48px;
             background: rgba(255, 0, 0, 0.12);
             border: 1px solid rgba(255, 0, 0, 0.35);
-            border-radius: 12px;
+            border-radius: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #ff0000;
-            font-size: 19px;
+            font-size: 20px;
         }
 
         .cat-text h3 {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 800;
             color: #fff;
             margin-bottom: 2px;
@@ -228,25 +230,18 @@
         }
 
         .cat-arrow {
-            color: #777;
-            font-size: 13px;
+            color: #666;
+            font-size: 14px;
         }
 
-        /* عنوان المعرض */
+        /* قسم المعرض */
         .section-header {
             width: 100%;
             max-width: 480px;
-            padding: 22px 20px 10px;
-            font-size: 18px;
+            padding: 25px 20px 12px;
+            font-size: 19px;
             font-weight: 900;
             color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .section-header span {
-            color: #ff0000;
         }
 
         .works-container {
@@ -256,16 +251,22 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .work-item {
-            background: #12121a;
-            border: 1px solid rgba(255,0,0,0.2);
-            border-radius: 12px;
+            background: #12121c;
+            border: 1px solid rgba(255,0,0,0.25);
+            border-radius: 14px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .work-item:active {
+            transform: scale(0.96);
         }
 
         .work-item img {
@@ -293,26 +294,26 @@
             font-weight: 700;
         }
 
-        .empty-works-box {
+        .empty-box {
             grid-column: span 2;
             color: #888;
             font-size: 13px;
             text-align: center;
-            padding: 20px;
-            background: rgba(20,20,28,0.5);
-            border-radius: 12px;
-            border: 1px dashed #333;
+            padding: 22px;
+            background: rgba(18,18,26,0.6);
+            border-radius: 14px;
+            border: 1px dashed rgba(255,0,0,0.3);
         }
 
-        /* زر الواتساب العريض السفلي */
+        /* زر الواتساب الأسفل */
         .fixed-whatsapp {
             position: fixed;
-            bottom: 18px;
+            bottom: 20px;
             width: 90%;
             max-width: 440px;
             background: linear-gradient(135deg, #ff0000, #b30000);
             color: #fff;
-            padding: 14px;
+            padding: 15px;
             border-radius: 35px;
             text-align: center;
             font-size: 17px;
@@ -324,14 +325,19 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+            transition: 0.2s;
         }
 
-        /* نافذة لوحة التحكم السرية */
+        .fixed-whatsapp:active {
+            transform: scale(0.97);
+        }
+
+        /* نافذة لوحة التحكم */
         #adminModal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.88);
+            background: rgba(0,0,0,0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -341,7 +347,7 @@
             background: #121218;
             border: 2px solid #ff0000;
             padding: 25px;
-            border-radius: 18px;
+            border-radius: 20px;
             width: 88%;
             max-width: 340px;
             text-align: center;
@@ -351,23 +357,23 @@
         .modal-body h2 { color: #ff0000; margin-bottom: 12px; font-size: 20px; }
 
         .modal-body input {
-            width: 100%; padding: 11px; background: #08080c;
-            border: 1px solid #333; color: #fff; border-radius: 8px;
+            width: 100%; padding: 12px; background: #08080c;
+            border: 1px solid #333; color: #fff; border-radius: 10px;
             margin-bottom: 12px; text-align: center; font-size: 15px;
         }
 
         .modal-body button {
             background: #ff0000; color: #fff; border: none;
-            padding: 11px; width: 100%; border-radius: 8px;
+            padding: 12px; width: 100%; border-radius: 10px;
             font-weight: 800; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- خلفية نيون سريعة خفيفة جداً -->
-    <div class="fast-neon-bg">
-        <div class="bg-glow-orb"></div>
+    <!-- خلفية طيارة فائقة الخفة -->
+    <div class="ultra-bg">
+        <div class="glow-circle"></div>
     </div>
 
     <!-- الهيدر العلوي -->
@@ -389,9 +395,9 @@
         </div>
     </section>
 
-    <!-- كروت الأقسام وسرعة الانتقال والتفاعل عند الضغط -->
+    <!-- كروت الأقسام التفاعلية -->
     <div class="categories-grid">
-        <div class="cat-card" onclick="selectCategory('all', this)">
+        <div class="cat-card active" onclick="selectCategory('all', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-border-all"></i></div>
                 <div class="cat-text">
@@ -458,14 +464,12 @@
         </div>
     </div>
 
-    <!-- المعرض التفاعلي السريع -->
+    <!-- المعرض التفاعلي -->
     <div class="section-header">
-        <div>🔥 قسم <span id="activeCatTitle">جميع الأعمال</span></div>
+        🔥 قسم <span id="activeCatTitle" style="color: #ff0000;">جميع الأعمال</span>
     </div>
 
-    <div class="works-container" id="worksContainer">
-        <!-- يتم عرض المشاريع المعروضة حسب القسم المختار هنا -->
-    </div>
+    <div class="works-container" id="worksContainer"></div>
 
     <!-- زر الواتساب الأسفل -->
     <a href="https://wa.me/201020427153" class="fixed-whatsapp">
@@ -482,7 +486,7 @@
     </div>
 
     <script>
-        // لوحة التحكم السرية
+        // فتح لوحة التحكم السرية
         const logo = document.getElementById('brandLogo');
         const modal = document.getElementById('adminModal');
 
@@ -500,7 +504,7 @@
         }
 
         // إدارات التصفية وعرض الأعمال
-        const catTitles = {
+        const catNames = {
             'all': 'جميع الأعمال',
             'websites': 'المواقع والمتاجر',
             'apps': 'التطبيقات',
@@ -510,14 +514,11 @@
         };
 
         function selectCategory(categoryKey, el) {
-            // تحديث تصميم الكارت النشط
             document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
             if(el) el.classList.add('active');
 
-            // تحديث العنوان
-            document.getElementById('activeCatTitle').textContent = catTitles[categoryKey] || 'الأعمال';
+            document.getElementById('activeCatTitle').textContent = catNames[categoryKey] || 'الأعمال';
 
-            // قراءة المشاريع المرفوعة
             const projects = JSON.parse(localStorage.getItem('shqawa_projects') || '[]');
             const container = document.getElementById('worksContainer');
             container.innerHTML = '';
@@ -528,9 +529,9 @@
 
             if(filtered.length === 0) {
                 container.innerHTML = `
-                    <div class="empty-works-box">
-                        <i class="fas fa-folder-open" style="font-size: 24px; color: #ff0000; margin-bottom: 8px;"></i><br>
-                        لسه مفيش أعمال مرفوعة في قسم (${catTitles[categoryKey]}).<br>تقدر تضيف مشاريع من لوحة التحكم!
+                    <div class="empty-box">
+                        <i class="fas fa-folder-open" style="font-size: 26px; color: #ff0000; margin-bottom: 8px;"></i><br>
+                        لسه مفيش أعمال مرفوعة في قسم (${catNames[categoryKey]}).<br>تقدر تضيف مشاريع من لوحة التحكم!
                     </div>
                 `;
             } else {
@@ -546,12 +547,8 @@
                     `;
                 });
             }
-
-            // التمرير الناعم لقسم المعرض
-            document.querySelector('.section-header').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // تشغيل القسم الافتراضي عند التحميل
         window.onload = () => {
             selectCategory('all', document.querySelector('.cat-card'));
         };
