@@ -2,7 +2,7 @@ const menuButton=document.getElementById('menuButton');
 const mainNav=document.getElementById('mainNav');
 menuButton?.addEventListener('click',()=>{const open=mainNav.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));});
 mainNav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mainNav.classList.remove('open');menuButton?.setAttribute('aria-expanded','false')}));
-const WHATSAPP_NUMBER='201020427153';
+const WHATSAPP_NUMBER='201038955357';
 const CART_KEY='shqawa_cart_v1';
 window.SHQAWA={
   categories:{web:'المواقع الإلكترونية',apps:'التطبيقات',design:'التصميمات',code:'المشاريع البرمجية'},
@@ -46,7 +46,7 @@ window.SHQAWA={
     if(!cart.length){alert('عربة التسوق فاضية. أضف مشروع الأول.');return;}
     const lines=cart.map((item,i)=>`${i+1}. ${item.name} — ${this.categoryLabel(item.category)}${item.description?`\n   التفاصيل: ${item.description}`:''}`).join('\n');
     const message=`السلام عليكم، عايز أطلب المشاريع دي من شقاوة برو:\n\n${lines}\n\nعدد المشاريع: ${cart.length}\nمن فضلك ابعتلي تفاصيل الأسعار وطريقة الاستلام.`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,'_blank','noopener');
+    window.open(`https://wa.me/${201038955357}?text=${encodeURIComponent(message)}`,'_blank','noopener');
   }
 };
 document.addEventListener('DOMContentLoaded',()=>{
