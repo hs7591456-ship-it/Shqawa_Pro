@@ -83,3 +83,11 @@ body.cart-lock{overflow:hidden}
   padding:2px;
   box-shadow:0 0 7px #ff365544;
 }
+
+
+/* v8: prevent sideways page movement on mobile */
+html, body { width:100%; max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; }
+body { position:relative; }
+img, video, iframe, canvas, svg { max-width:100%; }
+.hero-visual, .showcase, .floating-chip { min-width:0; }
+@media (max-width:600px) { .hero-visual { overflow:hidden; } .chip-top { right:8px; } .chip-bottom { left:8px; } }
