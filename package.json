@@ -1,9 +1,0 @@
-{
-  "name": "shqawa-pro",
-  "version": "1.0.0",
-  "private": true,
-  "description": "SHQAWA PRO Arabic creative services website with a server-side Gemini AI chat endpoint",
-  "engines": {
-    "node": ">=18"
-  }
-}
