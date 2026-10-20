@@ -14,10 +14,11 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #08080c;
+            background-color: #07070a;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -28,78 +29,35 @@
             overflow-x: hidden;
         }
 
-        /* الكانفاس الخاص بالخلفية المتحركة */
-        #bgCanvas {
+        /* خلفية نيون عالية السرعة والخفة GPU Accelerated */
+        .fast-neon-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
+            background: 
+                radial-gradient(circle at 50% 15%, rgba(255, 0, 0, 0.18) 0%, rgba(7, 7, 10, 0.98) 70%),
+                linear-gradient(180deg, #07070a 0%, #110202 100%);
             pointer-events: none;
         }
 
-        /* زر تبديل نمط الخلفية */
-        .bg-switcher-btn {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            background: rgba(20, 20, 25, 0.85);
-            border: 1px solid rgba(255, 0, 0, 0.6);
-            color: #fff;
-            width: 42px;
-            height: 42px;
+        .bg-glow-orb {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 0, 0, 0.12);
+            filter: blur(80px);
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 16px;
-            cursor: pointer;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-            transition: 0.3s;
+            top: 10%;
+            right: 5%;
+            animation: pulseFast 4s infinite alternate ease-in-out;
         }
 
-        .bg-switcher-btn:hover {
-            transform: scale(1.1) rotate(20deg);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
-        }
-
-        .bg-menu {
-            position: fixed;
-            top: 65px;
-            left: 15px;
-            background: rgba(15, 15, 20, 0.95);
-            border: 1px solid rgba(255, 0, 0, 0.4);
-            border-radius: 14px;
-            padding: 10px;
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 100;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-            width: 170px;
-        }
-
-        .bg-menu button {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid transparent;
-            color: #ccc;
-            padding: 8px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            text-align: right;
-            transition: 0.2s;
-        }
-
-        .bg-menu button:hover, .bg-menu button.active {
-            background: rgba(255, 0, 0, 0.25);
-            border-color: #ff0000;
-            color: #fff;
+        @keyframes pulseFast {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.2); opacity: 0.8; }
         }
 
         /* الهيدر العلوي */
@@ -115,20 +73,24 @@
         .phone-num {
             font-size: 15px;
             font-weight: 700;
-            color: #fff;
+            color: #ffffff;
             letter-spacing: 0.5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .brand-logo {
             font-size: 22px;
             font-weight: 900;
             color: #ff0000;
-            text-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
             cursor: pointer;
             user-select: none;
         }
 
-        /* البطل الرئيسي والبانر */
+        /* قسم البطل الرئيسي */
         .hero {
             width: 100%;
             max-width: 480px;
@@ -138,13 +100,13 @@
 
         .hero-banner {
             width: 100%;
-            height: 220px;
+            height: 210px;
             border-radius: 20px;
             overflow: hidden;
             position: relative;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 0, 0, 0.4);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.25);
         }
 
         .hero-banner img {
@@ -156,7 +118,7 @@
         .hero-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.55);
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -173,88 +135,87 @@
 
         .hero-title-red {
             color: #ff0000;
-            font-size: 30px;
+            font-size: 32px;
             font-weight: 900;
             text-shadow: 0 0 18px rgba(255, 0, 0, 0.9);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .hero-sub {
             font-size: 12px;
             color: #ccc;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
             font-weight: 600;
         }
 
         .btn-call {
-            background: #ff0000;
+            background: linear-gradient(135deg, #ff0000, #cc0000);
             color: #fff;
             padding: 10px 28px;
             border-radius: 25px;
             font-weight: 800;
             font-size: 15px;
             text-decoration: none;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            box-shadow: 0 0 18px rgba(255, 0, 0, 0.6);
             display: inline-block;
-            transition: 0.3s;
+            transition: transform 0.2s;
         }
 
-        .btn-call:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
+        .btn-call:active {
+            transform: scale(0.95);
         }
 
-        /* كروت الأقسام العريضة */
+        /* كروت الأقسام المودرن السريعة */
         .categories-grid {
             width: 100%;
             max-width: 480px;
             padding: 0 20px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .cat-card {
-            background: rgba(18, 18, 24, 0.75);
+            background: rgba(18, 18, 25, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 16px 20px;
+            border-radius: 16px;
+            padding: 15px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
         }
 
-        .cat-card:hover {
-            border-color: rgba(255, 0, 0, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.25);
-            background: rgba(25, 25, 35, 0.9);
+        .cat-card:active, .cat-card.active {
+            border-color: #ff0000;
+            transform: scale(0.98);
+            background: rgba(255, 0, 0, 0.12);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
 
         .cat-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
         }
 
         .cat-icon {
-            width: 48px;
-            height: 48px;
+            width: 46px;
+            height: 46px;
             background: rgba(255, 0, 0, 0.12);
-            border: 1px solid rgba(255, 0, 0, 0.3);
-            border-radius: 14px;
+            border: 1px solid rgba(255, 0, 0, 0.35);
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #ff0000;
-            font-size: 20px;
+            font-size: 19px;
         }
 
         .cat-text h3 {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
             color: #fff;
             margin-bottom: 2px;
@@ -262,43 +223,96 @@
 
         .cat-text p {
             font-size: 12px;
-            color: #ff0000;
+            color: #ff3333;
             font-weight: 700;
         }
 
         .cat-arrow {
-            color: #666;
-            font-size: 14px;
+            color: #777;
+            font-size: 13px;
         }
 
         /* عنوان المعرض */
         .section-header {
             width: 100%;
             max-width: 480px;
-            padding: 25px 20px 10px;
-            font-size: 19px;
+            padding: 22px 20px 10px;
+            font-size: 18px;
             font-weight: 900;
             color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .empty-works-box {
+        .section-header span {
+            color: #ff0000;
+        }
+
+        .works-container {
             width: 100%;
             max-width: 480px;
             padding: 0 20px;
-            color: #777;
-            font-size: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin-bottom: 20px;
+        }
+
+        .work-item {
+            background: #12121a;
+            border: 1px solid rgba(255,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .work-item img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+        }
+
+        .work-item-body {
+            padding: 10px;
+        }
+
+        .work-item-body h4 {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .work-item-body span {
+            font-size: 10px;
+            color: #ff0000;
+            background: rgba(255, 0, 0, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .empty-works-box {
+            grid-column: span 2;
+            color: #888;
+            font-size: 13px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(20,20,28,0.5);
+            border-radius: 12px;
+            border: 1px dashed #333;
         }
 
         /* زر الواتساب العريض السفلي */
         .fixed-whatsapp {
             position: fixed;
-            bottom: 20px;
+            bottom: 18px;
             width: 90%;
             max-width: 440px;
-            background: linear-gradient(135deg, #ff0000, #cc0000);
+            background: linear-gradient(135deg, #ff0000, #b30000);
             color: #fff;
-            padding: 15px;
+            padding: 14px;
             border-radius: 35px;
             text-align: center;
             font-size: 17px;
@@ -317,7 +331,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.88);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -326,44 +340,34 @@
         .modal-body {
             background: #121218;
             border: 2px solid #ff0000;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 360px;
+            padding: 25px;
+            border-radius: 18px;
+            width: 88%;
+            max-width: 340px;
             text-align: center;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
         }
 
-        .modal-body h2 { color: #ff0000; margin-bottom: 15px; }
+        .modal-body h2 { color: #ff0000; margin-bottom: 12px; font-size: 20px; }
 
         .modal-body input {
-            width: 100%; padding: 12px; background: #08080c;
-            border: 1px solid #333; color: #fff; border-radius: 10px;
-            margin-bottom: 15px; text-align: center; font-size: 16px;
+            width: 100%; padding: 11px; background: #08080c;
+            border: 1px solid #333; color: #fff; border-radius: 8px;
+            margin-bottom: 12px; text-align: center; font-size: 15px;
         }
 
         .modal-body button {
             background: #ff0000; color: #fff; border: none;
-            padding: 12px; width: 100%; border-radius: 10px;
+            padding: 11px; width: 100%; border-radius: 8px;
             font-weight: 800; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <!-- الكانفاس الخاص بالخلفيات المتحركة -->
-    <canvas id="bgCanvas"></canvas>
-
-    <!-- زر تبديل نمط الخلفية -->
-    <button class="bg-switcher-btn" id="bgSwitcherBtn" title="تغيير نمط الخلفية المتحركة">
-        <i class="fas fa-palette"></i>
-    </button>
-
-    <!-- قائمة أنماط الخلفيات -->
-    <div class="bg-menu" id="bgMenu">
-        <button onclick="setBgPattern('particles')" id="btn-particles" class="active">🔴 جزيئات النيون</button>
-        <button onclick="setBgPattern('cyberwave')" id="btn-cyberwave">🌐 شبكة السايبير</button>
-        <button onclick="setBgPattern('cosmic')" id="btn-cosmic">💫 التوهج الكوني</button>
+    <!-- خلفية نيون سريعة خفيفة جداً -->
+    <div class="fast-neon-bg">
+        <div class="bg-glow-orb"></div>
     </div>
 
     <!-- الهيدر العلوي -->
@@ -385,9 +389,9 @@
         </div>
     </section>
 
-    <!-- كروت الأقسام -->
+    <!-- كروت الأقسام وسرعة الانتقال والتفاعل عند الضغط -->
     <div class="categories-grid">
-        <div class="cat-card">
+        <div class="cat-card" onclick="selectCategory('all', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-border-all"></i></div>
                 <div class="cat-text">
@@ -398,7 +402,7 @@
             <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="cat-card">
+        <div class="cat-card" onclick="selectCategory('websites', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-laptop-code"></i></div>
                 <div class="cat-text">
@@ -409,7 +413,7 @@
             <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="cat-card">
+        <div class="cat-card" onclick="selectCategory('apps', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-mobile-alt"></i></div>
                 <div class="cat-text">
@@ -420,7 +424,7 @@
             <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="cat-card">
+        <div class="cat-card" onclick="selectCategory('bots', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-robot"></i></div>
                 <div class="cat-text">
@@ -431,7 +435,7 @@
             <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="cat-card">
+        <div class="cat-card" onclick="selectCategory('scripts', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-code"></i></div>
                 <div class="cat-text">
@@ -442,7 +446,7 @@
             <i class="fas fa-chevron-left cat-arrow"></i>
         </div>
 
-        <div class="cat-card">
+        <div class="cat-card" onclick="selectCategory('designs', this)">
             <div class="cat-info">
                 <div class="cat-icon"><i class="fas fa-paint-brush"></i></div>
                 <div class="cat-text">
@@ -454,9 +458,14 @@
         </div>
     </div>
 
-    <!-- آخر الأعمال -->
-    <div class="section-header">🔥 أحدث المشاريع والأعمال</div>
-    <div class="empty-works-box">لسه مفيش مشاريع مرفوعة، ارفع من لوحة التحكم...</div>
+    <!-- المعرض التفاعلي السريع -->
+    <div class="section-header">
+        <div>🔥 قسم <span id="activeCatTitle">جميع الأعمال</span></div>
+    </div>
+
+    <div class="works-container" id="worksContainer">
+        <!-- يتم عرض المشاريع المعروضة حسب القسم المختار هنا -->
+    </div>
 
     <!-- زر الواتساب الأسفل -->
     <a href="https://wa.me/201020427153" class="fixed-whatsapp">
@@ -472,9 +481,8 @@
         </div>
     </div>
 
-    <!-- كود المحرك والخلفيات المتحركة -->
     <script>
-        // --- لوحة التحكم ---
+        // لوحة التحكم السرية
         const logo = document.getElementById('brandLogo');
         const modal = document.getElementById('adminModal');
 
@@ -485,110 +493,68 @@
         function loginAdmin() {
             const pass = document.getElementById('passInput').value;
             if(pass === 'admin') {
-                alert('أهلاً بك يا أستاذنا في لوحة التحكم!');
-                modal.style.display = 'none';
+                window.location.href = 'admin.html';
             } else {
                 alert('كلمة المرور غير صحيحة!');
             }
         }
 
-        // --- محرك الخلفيات المتحركة التفاعلي ---
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        const switcherBtn = document.getElementById('bgSwitcherBtn');
-        const bgMenu = document.getElementById('bgMenu');
-
-        switcherBtn.onclick = () => {
-            bgMenu.style.display = bgMenu.style.display === 'flex' ? 'none' : 'flex';
+        // إدارات التصفية وعرض الأعمال
+        const catTitles = {
+            'all': 'جميع الأعمال',
+            'websites': 'المواقع والمتاجر',
+            'apps': 'التطبيقات',
+            'bots': 'البوتات الذكية',
+            'scripts': 'البرمجة والسكربتات',
+            'designs': 'التصاميم والبنرات'
         };
 
-        let width, height;
-        let pattern = localStorage.getItem('shqawa_bg_pattern') || 'particles';
+        function selectCategory(categoryKey, el) {
+            // تحديث تصميم الكارت النشط
+            document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+            if(el) el.classList.add('active');
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+            // تحديث العنوان
+            document.getElementById('activeCatTitle').textContent = catTitles[categoryKey] || 'الأعمال';
 
-        // 1. نمط الجزيئات
-        let particles = [];
-        for(let i=0; i<60; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 2 + 1,
-                vx: (Math.random() - 0.5) * 0.8,
-                vy: (Math.random() - 0.5) * 0.8,
-                alpha: Math.random()
-            });
-        }
+            // قراءة المشاريع المرفوعة
+            const projects = JSON.parse(localStorage.getItem('shqawa_projects') || '[]');
+            const container = document.getElementById('worksContainer');
+            container.innerHTML = '';
 
-        let step = 0;
+            const filtered = categoryKey === 'all' 
+                ? projects 
+                : projects.filter(p => p.category === categoryKey);
 
-        function drawBackground() {
-            ctx.clearRect(0, 0, width, height);
-
-            if(pattern === 'particles') {
-                particles.forEach(p => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    if(p.x < 0 || p.x > width) p.vx *= -1;
-                    if(p.y < 0 || p.y > height) p.vy *= -1;
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 0, 0, ${p.alpha * 0.7})`;
-                    ctx.fill();
+            if(filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-works-box">
+                        <i class="fas fa-folder-open" style="font-size: 24px; color: #ff0000; margin-bottom: 8px;"></i><br>
+                        لسه مفيش أعمال مرفوعة في قسم (${catTitles[categoryKey]}).<br>تقدر تضيف مشاريع من لوحة التحكم!
+                    </div>
+                `;
+            } else {
+                filtered.forEach(p => {
+                    container.innerHTML += `
+                        <div class="work-item" onclick="window.open('https://wa.me/201020427153?text=أهلاً شقاوة، مهتم بطلب مشروع: ${encodeURIComponent(p.title)}')">
+                            <img src="${p.image}" alt="${p.title}">
+                            <div class="work-item-body">
+                                <h4>${p.title}</h4>
+                                <span>${p.categoryName}</span>
+                            </div>
+                        </div>
+                    `;
                 });
-            } 
-            else if(pattern === 'cyberwave') {
-                step += 0.02;
-                ctx.strokeStyle = 'rgba(255, 0, 0, 0.18)';
-                ctx.lineWidth = 1;
-
-                for(let y = 0; y < height; y += 40) {
-                    ctx.beginPath();
-                    for(let x = 0; x < width; x += 20) {
-                        let wave = Math.sin(x * 0.01 + step + y * 0.01) * 15;
-                        if(x === 0) ctx.moveTo(x, y + wave);
-                        else ctx.lineTo(x, y + wave);
-                    }
-                    ctx.stroke();
-                }
-            } 
-            else if(pattern === 'cosmic') {
-                step += 0.01;
-                let gradient = ctx.createRadialGradient(
-                    width/2 + Math.sin(step)*100, 
-                    height/3 + Math.cos(step)*50, 
-                    20, 
-                    width/2, 
-                    height/2, 
-                    width * 0.7
-                );
-                gradient.addColorStop(0, 'rgba(255, 0, 0, 0.22)');
-                gradient.addColorStop(1, 'rgba(8, 8, 12, 0)');
-
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, width, height);
             }
 
-            requestAnimationFrame(drawBackground);
+            // التمرير الناعم لقسم المعرض
+            document.querySelector('.section-header').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function setBgPattern(p) {
-            pattern = p;
-            localStorage.setItem('shqawa_bg_pattern', p);
-            document.querySelectorAll('.bg-menu button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-' + p).classList.add('active');
-            bgMenu.style.display = 'none';
-        }
-
-        document.getElementById('btn-' + pattern)?.classList.add('active');
-
-        drawBackground();
+        // تشغيل القسم الافتراضي عند التحميل
+        window.onload = () => {
+            selectCategory('all', document.querySelector('.cat-card'));
+        };
     </script>
 </body>
 </html>
