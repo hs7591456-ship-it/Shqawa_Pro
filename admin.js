@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const form = $('itemForm');
   const file = $('itemImage');
+  const galleryInput = $('itemGallery');
+  const galleryPreview = $('galleryPreview');
   const preview = $('imagePreview');
   const message = $('formMessage');
 
@@ -230,6 +232,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // معاينة الصورة قبل الحفظ
+  galleryInput?.addEventListener('change', () => {
+    galleryPreview.innerHTML = '';
+    const files = Array.from(galleryInput.files || []);
+    galleryPreview.hidden = !files.length;
+    files.forEach(f => { const img = document.createElement('img'); img.src = URL.createObjectURL(f); img.alt = f.name; galleryPreview.appendChild(img); });
+    if (files.length) msg(`تم اختيار ${files.length} صورة للمعرض.`, true);
+  });
+
   file?.addEventListener('change', () => {
     imageUrl = '';
     preview.hidden = true;
@@ -268,12 +278,13 @@ document.addEventListener('DOMContentLoaded', () => {
         nextImage = await uploadImage(file.files[0]);
       }
 
+      const publishAtRaw = $('publishAt')?.value || '';
       const payload = {
-        title: $('itemName').value.trim(),
-        category: $('itemCategory').value,
-        description: $('itemDescription').value.trim(),
-        image_url: nextImage || null,
-        project_url: $('itemLink').value.trim() || null
+        title: $('itemName').value.trim(), category: $('itemCategory').value,
+        description: $('itemDescription').value.trim(), image_url: nextImage || null,
+        project_url: $('itemLink').value.trim() || null,
+        is_published: $('isPublished')?.checked !== false,
+        publish_at: publishAtRaw ? new Date(publishAtRaw).toISOString() : null
       };
 
       if (!payload.title) {
@@ -282,18 +293,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
       let result;
 
+      let projectId = id;
       if (id) {
-        result = await db
-          .from('projects')
-          .update(payload)
-          .eq('id', id);
+        result = await db.from('projects').update(payload).eq('id', id);
       } else {
-        result = await db
-          .from('projects')
-          .insert(payload);
+        result = await db.from('projects').insert(payload).select('id').single();
+        if (!result.error) projectId = result.data?.id;
       }
-
       if (result.error) throw result.error;
+
+      const galleryFiles = Array.from(galleryInput?.files || []);
+      if (galleryFiles.length) {
+        const rows = [];
+        for (let i = 0; i < galleryFiles.length; i++) {
+          const url = await uploadImage(galleryFiles[i]);
+          rows.push({ project_id: String(projectId), image_url: url, sort_order: i });
+          if (!nextImage && i === 0) nextImage = url;
+        }
+        const { error: galleryError } = await db.from('project_images').insert(rows);
+        if (galleryError) throw new Error('تم حفظ بيانات المشروع لكن تعذر حفظ معرض الصور. شغّل ملف SUPABASE-FEATURES.sql ثم جرّب رفع صور المعرض مرة أخرى. ' + galleryError.message);
+        if (!id && nextImage) {
+          const { error: coverError } = await db.from('projects').update({ image_url: nextImage }).eq('id', projectId);
+          if (coverError) console.warn('Could not set gallery cover:', coverError.message);
+        }
+      }
 
       resetForm();
       await loadAndRender();
@@ -327,6 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetForm() {
     $('itemId').value = '';
     form.reset();
+    if (galleryInput) galleryInput.value = '';
+    if (galleryPreview) { galleryPreview.hidden = true; galleryPreview.innerHTML = ''; }
+    if ($('isPublished')) $('isPublished').checked = true;
 
     imageUrl = '';
     preview.hidden = true;
@@ -340,7 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // تحميل المشاريع
   async function loadAndRender() {
     try {
-      currentItems = await window.SHQAWA.getItems();
+      const { data, error } = await db.from('projects').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      currentItems = (data || []).map(row => ({ id:String(row.id), name:row.title || row.name || '', category:row.category || 'web', description:row.description || '', image:row.image_url || row.image || '', link:row.project_url || row.link || '', publishAt:row.publish_at || '', isPublished:row.is_published !== false }));
       renderItems();
     } catch (err) {
       console.error('Load projects error:', err);
@@ -389,8 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title.textContent = item.name;
 
       const meta = document.createElement('small');
-      meta.textContent =
-        window.SHQAWA.categoryLabel(item.category);
+      meta.textContent = window.SHQAWA.categoryLabel(item.category) + (item.publishAt && new Date(item.publishAt) > new Date() ? ' · مجدول' : (item.isPublished === false ? ' · مخفي' : '')); 
 
       info.append(title, meta);
 
@@ -408,6 +435,10 @@ document.addEventListener('DOMContentLoaded', () => {
         $('itemCategory').value = item.category;
         $('itemDescription').value = item.description || '';
         $('itemLink').value = item.link || '';
+        if ($('publishAt')) $('publishAt').value = item.publishAt ? new Date(item.publishAt).toISOString().slice(0,16) : '';
+        if ($('isPublished')) $('isPublished').checked = item.isPublished !== false;
+        if (galleryInput) galleryInput.value = '';
+        if (galleryPreview) { galleryPreview.hidden = true; galleryPreview.innerHTML = ''; }
 
         file.value = '';
         imageUrl = item.image || '';
@@ -471,4 +502,37 @@ document.addEventListener('DOMContentLoaded', () => {
       root.appendChild(row);
     });
   }
+
+  // أدوات مركز التحكم: الإعدادات، سجل التحديثات، والتصويت.
+  const settingForm = $('siteSettingsForm');
+  settingForm?.addEventListener('submit', async e => {
+    e.preventDefault(); const out = $('settingsMessage');
+    try {
+      const rows = [
+        {setting_key:'announcement', setting_value:$('settingAnnouncement').value.trim(), updated_at:new Date().toISOString()},
+        {setting_key:'contact_url', setting_value:$('settingContact').value.trim(), updated_at:new Date().toISOString()}
+      ];
+      const {error} = await db.from('site_settings').upsert(rows, {onConflict:'setting_key'});
+      if (error) throw error; out.textContent = 'تم حفظ إعدادات الموقع.'; out.style.color='#8ee0ae';
+    } catch(err) { out.textContent = 'تعذر حفظ الإعدادات. تأكد من تشغيل SUPABASE-FEATURES.sql. ' + errorText(err); out.style.color='#ff8796'; }
+  });
+  (async()=>{ try { const {data,error}=await db.from('site_settings').select('setting_key,setting_value'); if(error) return; (data||[]).forEach(x=>{if(x.setting_key==='announcement') $('settingAnnouncement').value=x.setting_value;if(x.setting_key==='contact_url') $('settingContact').value=x.setting_value;}); } catch(_){} })();
+
+  $('updateForm')?.addEventListener('submit', async e => {
+    e.preventDefault(); const out=$('updateMessage');
+    try { const {error}=await db.from('site_updates').insert({title:$('updateTitle').value.trim(),body:$('updateBody').value.trim(),is_published:true}); if(error) throw error; $('updateForm').reset(); out.textContent='تم نشر التحديث.'; out.style.color='#8ee0ae'; await renderAdminUpdates(); }
+    catch(err){out.textContent='تعذر النشر. شغّل SUPABASE-FEATURES.sql. '+errorText(err);out.style.color='#ff8796';}
+  });
+  async function renderAdminUpdates(){ const root=$('adminUpdates'); if(!root)return; try{const {data,error}=await db.from('site_updates').select('*').order('created_at',{ascending:false}).limit(5);if(error)throw error;root.innerHTML='';(data||[]).forEach(u=>{const d=document.createElement('div');d.className='admin-mini-row';const b=document.createElement('b');b.textContent=u.title;const del=document.createElement('button');del.className='small-button delete';del.textContent='حذف';del.onclick=async()=>{if(confirm('حذف التحديث؟')){const r=await db.from('site_updates').delete().eq('id',u.id);if(!r.error)renderAdminUpdates();}};d.append(b,del);root.appendChild(d);});}catch(_){} }
+  renderAdminUpdates();
+
+  $('pollForm')?.addEventListener('submit', async e => {
+    e.preventDefault(); const out=$('pollMessage'); const options=$('pollOptions').value.split('\n').map(x=>x.trim()).filter(Boolean);
+    if(options.length<2){out.textContent='اكتب اختيارين على الأقل، كل اختيار في سطر.';return;}
+    try { const {error}=await db.from('site_polls').insert({question:$('pollQuestion').value.trim(),options,is_active:true});if(error)throw error;$('pollForm').reset();out.textContent='تم نشر التصويت.';out.style.color='#8ee0ae';await renderAdminPolls(); }
+    catch(err){out.textContent='تعذر نشر التصويت. شغّل SUPABASE-FEATURES.sql. '+errorText(err);out.style.color='#ff8796';}
+  });
+  async function renderAdminPolls(){const root=$('adminPolls');if(!root)return;try{const {data,error}=await db.from('site_polls').select('*').order('created_at',{ascending:false}).limit(5);if(error)throw error;root.innerHTML='';for(const p of (data||[])){const d=document.createElement('div');d.className='admin-mini-row';const info=document.createElement('div');const b=document.createElement('b');b.textContent=p.question;info.appendChild(b);const {data:votes}=await db.from('site_poll_votes').select('option_index').eq('poll_id',p.id);const counts=(Array.isArray(p.options)?p.options:[]).map((option,i)=>`${option}: ${(votes||[]).filter(v=>v.option_index===i).length}`);const small=document.createElement('small');small.textContent=counts.join(' · ');info.appendChild(small);const del=document.createElement('button');del.className='small-button delete';del.textContent='حذف';del.onclick=async()=>{if(confirm('حذف التصويت؟')){const r=await db.from('site_polls').delete().eq('id',p.id);if(!r.error)renderAdminPolls();}};d.append(info,del);root.appendChild(d);}}catch(_){} }
+  renderAdminPolls();
+
 });
