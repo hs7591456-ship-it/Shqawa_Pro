@@ -510,13 +510,17 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const rows = [
         {setting_key:'announcement', setting_value:$('settingAnnouncement').value.trim(), updated_at:new Date().toISOString()},
-        {setting_key:'contact_url', setting_value:$('settingContact').value.trim(), updated_at:new Date().toISOString()}
+        {setting_key:'contact_url', setting_value:$('settingContact').value.trim(), updated_at:new Date().toISOString()},
+        {setting_key:'social_telegram', setting_value:$('settingTelegram').value.trim(), updated_at:new Date().toISOString()},
+        {setting_key:'social_instagram', setting_value:$('settingInstagram').value.trim(), updated_at:new Date().toISOString()},
+        {setting_key:'social_facebook', setting_value:$('settingFacebook').value.trim(), updated_at:new Date().toISOString()},
+        {setting_key:'social_whatsapp', setting_value:$('settingContact').value.trim(), updated_at:new Date().toISOString()}
       ];
       const {error} = await db.from('site_settings').upsert(rows, {onConflict:'setting_key'});
       if (error) throw error; out.textContent = 'تم حفظ إعدادات الموقع.'; out.style.color='#8ee0ae';
     } catch(err) { out.textContent = 'تعذر حفظ الإعدادات. تأكد من تشغيل SUPABASE-FEATURES.sql. ' + errorText(err); out.style.color='#ff8796'; }
   });
-  (async()=>{ try { const {data,error}=await db.from('site_settings').select('setting_key,setting_value'); if(error) return; (data||[]).forEach(x=>{if(x.setting_key==='announcement') $('settingAnnouncement').value=x.setting_value;if(x.setting_key==='contact_url') $('settingContact').value=x.setting_value;}); } catch(_){} })();
+  (async()=>{ try { const {data,error}=await db.from('site_settings').select('setting_key,setting_value'); if(error) return; (data||[]).forEach(x=>{if(x.setting_key==='announcement') $('settingAnnouncement').value=x.setting_value;if(x.setting_key==='contact_url') $('settingContact').value=x.setting_value;if(x.setting_key==='social_telegram') $('settingTelegram').value=x.setting_value;if(x.setting_key==='social_instagram') $('settingInstagram').value=x.setting_value;if(x.setting_key==='social_facebook') $('settingFacebook').value=x.setting_value;}); } catch(_){} })();
 
   $('updateForm')?.addEventListener('submit', async e => {
     e.preventDefault(); const out=$('updateMessage');
@@ -525,6 +529,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   async function renderAdminUpdates(){ const root=$('adminUpdates'); if(!root)return; try{const {data,error}=await db.from('site_updates').select('*').order('created_at',{ascending:false}).limit(5);if(error)throw error;root.innerHTML='';(data||[]).forEach(u=>{const d=document.createElement('div');d.className='admin-mini-row';const b=document.createElement('b');b.textContent=u.title;const del=document.createElement('button');del.className='small-button delete';del.textContent='حذف';del.onclick=async()=>{if(confirm('حذف التحديث؟')){const r=await db.from('site_updates').delete().eq('id',u.id);if(!r.error)renderAdminUpdates();}};d.append(b,del);root.appendChild(d);});}catch(_){} }
   renderAdminUpdates();
+  async function renderAdminSuggestions(){const root=$('adminSuggestions');if(!root)return;try{const {data,error}=await db.from('site_suggestions').select('*').order('created_at',{ascending:false}).limit(100);if(error)throw error;root.innerHTML='';if(!data?.length){root.textContent='مفيش اقتراحات لسه.';return;}data.forEach(s=>{const card=document.createElement('article');card.className='admin-suggestion';const name=document.createElement('b');name.textContent=s.sender_name||'زائر';const date=document.createElement('small');date.textContent=s.created_at?new Date(s.created_at).toLocaleString('ar-EG'):'';const body=document.createElement('p');body.textContent=s.suggestion||'';const del=document.createElement('button');del.className='small-button delete';del.textContent='حذف';del.onclick=async()=>{if(confirm('حذف الاقتراح؟')){const r=await db.from('site_suggestions').delete().eq('id',s.id);if(!r.error)renderAdminSuggestions();}};card.append(name,date,body,del);root.append(card);});}catch(err){root.innerHTML='<p class="form-message">تعذر تحميل الاقتراحات. شغّل ملف SUPABASE-FEATURES.sql بعد إضافة جدول الاقتراحات.</p>';}}
+  renderAdminSuggestions();
 
   $('pollForm')?.addEventListener('submit', async e => {
     e.preventDefault(); const out=$('pollMessage'); const options=$('pollOptions').value.split('\n').map(x=>x.trim()).filter(Boolean);

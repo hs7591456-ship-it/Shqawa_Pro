@@ -321,6 +321,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // عدد الإشعارات في القائمة العلوية.
+  (async()=>{const badge=document.getElementById('navNotificationCount');if(!badge||!window.SHQAWA_DB)return;try{const {count,error}=await window.SHQAWA_DB.from('site_updates').select('id',{count:'exact',head:true}).eq('is_published',true);if(!error&&count>0)badge.textContent=count>9?'9+':String(count);}catch(_){}})();
+
   // معرض الصور: إغلاق النافذة بزر الإغلاق أو الخلفية أو Escape.
   const galleryModal = document.getElementById('projectGalleryModal');
   galleryModal?.querySelector('[data-gallery-close]')?.addEventListener('click', () => { galleryModal.hidden=true; document.body.classList.remove('gallery-lock'); });
@@ -328,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', e => { if(e.key==='Escape' && galleryModal && !galleryModal.hidden){galleryModal.hidden=true;document.body.classList.remove('gallery-lock');} });
 
   // إعدادات الإعلان ورابط التواصل من مركز تحكم الأدمن.
-  (async()=>{const announcement=await window.SHQAWA.getSetting('announcement');if(announcement){let bar=document.getElementById('siteAnnouncement');if(!bar){bar=document.createElement('div');bar.id='siteAnnouncement';bar.className='site-announcement';document.querySelector('header.site-header')?.after(bar);}if(bar)bar.textContent=announcement;}const contact=await window.SHQAWA.getSetting('contact_url');if(contact){document.querySelectorAll('a[href*="wa.me/"]').forEach(a=>a.href=contact);}})();
+  (async()=>{const contact=await window.SHQAWA.getSetting('contact_url');if(contact){document.querySelectorAll('a[href*="wa.me/"]').forEach(a=>a.href=contact);}})();
 
   // المساعد الذكي المحلي: يرشح من بيانات المشاريع الموجودة دون API مدفوع.
   const assistantForm=document.getElementById('assistantForm');
